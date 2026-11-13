@@ -14,6 +14,18 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/tasks', require('./routes/taskRoutes'));
 
+// Serve the React build (frontend/build) from this same server/port
+const path = require('path');
+const fs = require('fs');
+const buildPath = path.join(__dirname, '..', 'frontend', 'build');
+if (fs.existsSync(buildPath)) {
+  app.use(express.static(buildPath));
+  // Any non-API route returns index.html so React Router can handle it
+  app.get(/^(?!\/api).*/, (req, res) => {
+    res.sendFile(path.join(buildPath, 'index.html'));
+  });
+}
+
 // Export the app object for testing
 if (require.main === module) {
     connectDB();
