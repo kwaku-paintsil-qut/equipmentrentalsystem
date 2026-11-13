@@ -13,7 +13,11 @@ const Register = () => {
       alert('Registration successful. Please log in.');
       navigate('/login');
     } catch (error) {
-      alert('Registration failed. Please try again.');
+      const message = error.response?.data?.message
+        || (error.request
+          ? 'Could not reach the server. Check that the backend is running and the API URL is correct.'
+          : 'Registration failed. Please try again.');
+      alert(`Registration failed: ${message}`);
     }
   };
 

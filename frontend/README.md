@@ -2,6 +2,13 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## API configuration
+
+In development, the frontend sends API requests to `http://localhost:5001`.
+For a separate backend host, set `REACT_APP_API_URL` to its base URL before
+starting the frontend or building it for production. If it is unset in
+production, requests use the same origin as the frontend.
+
 ## Available Scripts
 
 In the project directory, you can run:
