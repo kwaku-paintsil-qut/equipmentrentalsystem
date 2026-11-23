@@ -1,0 +1,14 @@
+$kind: http-request
+url: http://localhost:5001/api/auth/register
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "firstName": "",
+        "LastName": "",
+        "email":"",
+        "password": "$Totestmyapplication1",
+        "role": "manager"
+    }
+order: 1000
