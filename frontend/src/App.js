@@ -3,8 +3,10 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Catalogue from './pages/Catalogue';
 import Dashboard from './pages/Dashboard';
+import Forbidden from './pages/Forbidden';
 import AppLayout from './AppLayout';
 import { Navigate } from 'react-router-dom';
+import RoleCheck from './components/rolecheck';
 
 function App() {
   return (
@@ -16,7 +18,10 @@ function App() {
 
         <Route element={<AppLayout />}>                        
           <Route path="/catalogue" element={<Catalogue />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<RoleCheck allowedRoles={['staff', 'manager']}>
+            <Dashboard />
+          </RoleCheck>} />
+          <Route path="/forbidden" element={<Forbidden />} />
         </Route>                                               
       </Routes>
     </Router>
