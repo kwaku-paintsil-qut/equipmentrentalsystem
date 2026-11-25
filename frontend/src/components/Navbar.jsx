@@ -11,16 +11,15 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-200 text-gray-800 p-4 flex justify-between items-center">
+    <nav className="bg-gray-200 text-gray-600 p-4 flex justify-between items-center">
       <Link to="/" className="text-2xl font-bold">Equipment Rental System</Link>
       <div>
         {user ? (
           <>
-            <Link to="/tasks" className="mr-4">Tasks</Link>
-            <Link to="/profile" className="mr-4">Profile</Link>
+            <span className="mr-4">{user.firstName} {user.lastName}</span>
             <button
               onClick={handleLogout}
-              className="bg-red-500 px-4 py-2 rounded hover:bg-red-700"
+              className="px-4 py-2 rounded text-gray-600"
             >
               Logout
             </button>
