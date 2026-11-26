@@ -6,11 +6,9 @@ body:
   type: json
   content: |-
     {
-      "equipmentId": "6b06db7cb91bac00ca209ed8",
-      "pickupDate": "2026-12-01T09:00",
-      "returnDate": "2026-12-01T17:00",
-      "pricePerHour": 25,
-      "userId": "6b05c02101dee2efbd69f5ce"
+      "equipmentId": "6b06dd7cb91bac00ca209edc",
+      "pickupDate": "2026-12-10T09:00",
+      "returnDate": "2026-12-10T17:00"
     }
 auth:
   type: bearer

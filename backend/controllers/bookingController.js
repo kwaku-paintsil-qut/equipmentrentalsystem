@@ -3,6 +3,43 @@ const Equipment = require('../models/Equipment');
 
 const createBooking = async (req, res) => {
     const {  equipmentId, pickupDate, returnDate, pricePerHour } = req.body;
+    
+    const pickup = new Date(pickupDate);
+    pickup.setHours(0, 0, 0, 0); // Set time to midnight for comparison
+    const returnD = new Date(returnDate);
+    returnD.setHours(23, 59, 59, 999); // Set time to end of the day for comparison
+
+
+    if (isNaN(pickup) || isNaN(returnD)) {return res.status(400).json({ message: 'Please provide valid dates' });
+}
+
+    if (!pickupDate || !returnDate || !equipmentId) {
+        return res.status(400).json({ message: 'Please provide all required fields' });
+    };
+
+    if (returnD <= pickup) {
+        return res.status(400).json({ message: 'Return date must be after pickup date' });
+    };
+
+    if (pickup < new Date()) {
+        return res.status(400).json({ message: 'Pickup date must be in the future' });
+    };
+
+    const existingBookings = await Booking.find({
+        equipmentId,
+        $or: [
+            { pickupDate: { $lt: returnD }, returnDate: { $gt: pickup } },
+            { pickupDate: { $lt: returnD }, returnDate: { $gt: pickup } },
+            { pickupDate: { $lt: returnD }, returnDate: { $gt: pickup } },
+        ],
+    });
+
+    if (existingBookings.length > 0) {
+        return res.status(409).json({ message: 'Equipment is already booked for the selected dates' });
+    };
+
+
+    
     try {
         
         const equipment = await Equipment.findById(equipmentId);
