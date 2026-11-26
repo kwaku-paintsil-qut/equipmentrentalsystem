@@ -14,6 +14,7 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/tasks', require('./routes/taskRoutes'));
 app.use('/api/equipment', require('./routes/equipmentroute'));
+app.use('/api/bookings', require('./routes/bookingRoutes'));
 
 // Serve the React build (frontend/build) from this same server/port
 const path = require('path');
