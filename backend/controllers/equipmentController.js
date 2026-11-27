@@ -9,5 +9,16 @@ const getEquipment = async (req, res) => {
     }
 };
 
+const getEquipmentById = async (req, res) => {
+    try {
+        const equipment = await Equipment.findById(req.params.id);
+        if (!equipment) {
+            return res.status(404).json({ message: 'Equipment not found' });
+        }
+        res.status(200).json(equipment);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
-module.exports = {getEquipment};
+module.exports = { getEquipment, getEquipmentById };

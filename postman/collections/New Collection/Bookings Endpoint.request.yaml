@@ -1,0 +1,17 @@
+$kind: http-request
+description: ""
+url: http://localhost:5001/api/bookings
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "equipmentId": "6b06dd7cb91bac00ca209edc",
+      "pickupDate": "2026-12-10T09:00",
+      "returnDate": "2026-12-10T17:00"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_1byu}}"
+order: 3000

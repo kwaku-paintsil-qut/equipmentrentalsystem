@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
+import { Link } from "react-router-dom";
 
 
 
@@ -44,13 +45,19 @@ return (
         )}  
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {equipment.map((item) => (
-                <div key={item._id} className="bg-white p-4 shadow-md rounded">
+                <div key={item._id} className="bg-white p-4 shadow-md rounded-md">
                     <img src={item.imageUrl} alt={item.name} className="w-full h-48 object-cover mt-2" />
                    <div className="flex justify-between items-center mt-3">
                         <h2 className="text-lg font-semibold mb-2">{item.name}</h2>
                         <span className={`px-2 py-1 rounded ${statusStyles[item.status]}`}>{item.status}</span>
                      </div>  
                      <p className="text-lg font-semibold mb-2">${item.pricePerHour}/hr</p>
+
+                    {item.status === 'Available' ? (
+                    <Link to={`/booking/${item._id}`} className="bg-blue-500 text-white rounded hover:bg-blue-700">Book Now</Link>
+                    ) : (
+                        <span>Unavailable</span>
+                    )}
                 </div>
             ))}
         </div>
