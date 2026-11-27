@@ -4,6 +4,7 @@ import Register from './pages/Register';
 import Catalogue from './pages/Catalogue';
 import Dashboard from './pages/Dashboard';
 import Forbidden from './pages/Forbidden';
+import Booking from './pages/booking';
 import AppLayout from './AppLayout';
 import { Navigate } from 'react-router-dom';
 import RoleCheck from './components/rolecheck';
@@ -18,6 +19,7 @@ function App() {
 
         <Route element={<AppLayout />}>                        
           <Route path="/catalogue" element={<Catalogue />} />
+          <Route path="/booking/:equipmentId" element={<Booking />} /> 
           <Route path="/dashboard" element={<RoleCheck allowedRoles={['staff', 'manager']}>
             <Dashboard />
           </RoleCheck>} />

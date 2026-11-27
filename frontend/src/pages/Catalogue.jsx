@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
+import { Link } from "react-router-dom";
 
 
 
@@ -51,6 +52,7 @@ return (
                         <span className={`px-2 py-1 rounded ${statusStyles[item.status]}`}>{item.status}</span>
                      </div>  
                      <p className="text-lg font-semibold mb-2">${item.pricePerHour}/hr</p>
+                     <Link to={`/booking/${item._id}`} className="bg-blue-500 text-white rounded hover:bg-blue-700">Book Now</Link>
                 </div>
             ))}
         </div>
