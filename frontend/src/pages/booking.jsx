@@ -60,23 +60,23 @@ const handleSubmit = async (e) => {
 
     if (!equipment) return <div>Loading...</div>;
 
-    return (
-        <div>
-            <h1>Equipment Booking: {equipment.name}</h1>
+    return ( 
+        <div className='max-w-md mx-auto mt-10 bg-white p-6 rounded shadow'>
+            <h1 className='text-2xl font-bold mb-4 text-center text-gray-600'>Equipment Booking: {equipment.name}</h1>
+            <p className='text-lg font-semibold mb-2'>${equipment.pricePerHour}/hr</p>
+            <img src={equipment.imageUrl} alt={equipment.name} className='w-full h-48 object-cover rounded mb-4'></img>
             <form onSubmit={handleSubmit}>
-                <label>
+                <label className='block mb-1'>
                     Pickup Date:
-                    <input type="datetime-local" name="pickupDate" value={bookingData.pickupDate} onChange={handleChange} required />
+                    <input className='block w-full border rounded p-2 mt-1 mb-3' type="datetime-local" name="pickupDate" value={bookingData.pickupDate} onChange={handleChange} required />
                 </label>
-                <br />
-                <label>
+                <label className='block mb-1'>
                     Return Date:
-                    <input type="datetime-local" name="returnDate" value={bookingData.returnDate} onChange={handleChange} required />
+                    <input className='block w-full border rounded p-2 mt-1 mb-3' type="datetime-local" name="returnDate" value={bookingData.returnDate} onChange={handleChange} required />
                 </label>
-                <br />
                 {error && <p className="text-red-600">{error}</p>}
                 {success && <p className="text-green-700">{success}</p>}
-                <button type="submit">Book Now</button>
+                <button className='w-full bg-blue-700 text-white py-2 rounded hover:bg-blue-800' type="submit">Book Now</button>
             </form>
         </div>
     );
