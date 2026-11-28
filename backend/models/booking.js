@@ -9,5 +9,5 @@ const bookingSchema = new mongoose.Schema({
     total: { type: Number, required: true },
 });
 
-module.exports = mongoose.model('Booking', bookingSchema);
+module.exports = mongoose.model('booking', bookingSchema);
 

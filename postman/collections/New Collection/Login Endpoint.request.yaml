@@ -5,8 +5,10 @@ body:
   type: json
   content: |-
     {
-       "email": "test@outlook.com",
-       "password": "Test1"
+       "email": "paintsilbuabeng26@gmail.com",
+       "password": "Iama$tar56"
 
     }
+auth:
+  type: bearer
 order: 2000
