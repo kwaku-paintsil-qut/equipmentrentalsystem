@@ -75,10 +75,23 @@ const createBooking = async (req, res) => {
 const getAllBooking = async (req, res) => {
     try{
         const booking = await Booking.find()
-        .populate('userId', 'status');
+        .populate('userId', 'firstName lastName email')
+        .populate('equipmentId', 'name imageUrl');
         res.status(200).json(booking);
     }catch (error){
         res.status(500).json({message: error.message});
+    }
+};
+
+const getBookingById = async (req, res) => {
+    try {
+        const booking = await Booking.findById(req.params.id)
+        .populate('userId', 'firstName lastName email')
+        .populate('equipmentId', 'name imageUrl pricePerHour');
+        if (!booking) return res.status(404).json({ message: 'Booking not found' });
+        res.status(200).json(booking);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -109,4 +122,4 @@ const updateBookingStatus = async ( req, res ) => {
 
 
 
-module.exports = { createBooking, getAllBooking, updateBookingStatus };
+module.exports = { createBooking, getAllBooking, getBookingById, updateBookingStatus };
