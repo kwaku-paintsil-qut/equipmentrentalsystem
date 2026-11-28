@@ -1,34 +1,34 @@
-const booking = require('../models/booking');
 const Booking = require('../models/booking');
 const Equipment = require('../models/Equipment');
 
 const createBooking = async (req, res) => {
-    const {  equipmentId, pickupDate, returnDate, pricePerHour } = req.body;
+    const {  equipmentId, pickupDate, returnDate, } = req.body;
     
 
-    if (isNaN(pickup) || isNaN(returnD)) {return res.status(400).json({ message: 'Please provide valid dates' });
-}
-
-    if (!pickupDate || !returnDate || !equipmentId) {
+     if (!pickupDate || !returnDate || !equipmentId) {
         return res.status(400).json({ message: 'Please provide all required fields' });
     };
 
-    if (returnD <= pickup) {
-        return res.status(400).json({ message: 'Return date must be after pickup date' });
-    };
-
-    if (pickup < new Date()) {
-        return res.status(400).json({ message: 'Pickup date must be in the future' });
-    };
-
+    
     const start = new Date(pickupDate);
-    const end = new Date(returnDate);
+    const end = new Date(returnDate); 
 
     const pickup = new Date(start);
     pickup.setHours(0, 0, 0, 0); // Set time to midnight for comparison
     const returnD = new Date(end);
     returnD.setHours(23, 59, 59, 999); // Set time to end of the day for comparison
 
+    if (isNaN(pickup) || isNaN(returnD)) {return res.status(400).json({ message: 'Please provide valid dates' });
+    
+}
+
+    if (pickup < new Date()) {
+        return res.status(400).json({ message: 'Pickup date must be in the future' });
+    };
+
+    if (returnD <= pickup) {
+        return res.status(400).json({ message: 'Return date must be after pickup date' });
+    };
 
     const existingBookings = await Booking.find({
         equipmentId,
@@ -82,7 +82,31 @@ const getAllBooking = async (req, res) => {
     }
 };
 
+const updateBookingStatus = async ( req, res ) => {
+    const { status } = req.body;
+
+    if (!['Approved', 'Rejected'].includes (status)){
+        return res.status(400).json({ message: 'Status must be Approved or Rejected'});
+    }
+
+    try {
+        const booking = await Booking.findById(req.params.id);
+        if (!booking) return res.status(404).json({ message: 'Booking not found' });
+
+        if (booking.status !== 'Pending') {
+            return res.status(400).json({ message: 'Only pending bookings can be updated' });
+        }
+
+        booking.status = status;
+        await booking.save();
+        res.status(200).json(booking);
+    
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+    
+};
 
 
 
-module.exports = { createBooking, getAllBooking };
+module.exports = { createBooking, getAllBooking, updateBookingStatus };
