@@ -1,14 +1,10 @@
+const booking = require('../models/booking');
 const Booking = require('../models/booking');
 const Equipment = require('../models/Equipment');
 
 const createBooking = async (req, res) => {
     const {  equipmentId, pickupDate, returnDate, pricePerHour } = req.body;
     
-    const pickup = new Date(pickupDate);
-    pickup.setHours(0, 0, 0, 0); // Set time to midnight for comparison
-    const returnD = new Date(returnDate);
-    returnD.setHours(23, 59, 59, 999); // Set time to end of the day for comparison
-
 
     if (isNaN(pickup) || isNaN(returnD)) {return res.status(400).json({ message: 'Please provide valid dates' });
 }
@@ -24,6 +20,15 @@ const createBooking = async (req, res) => {
     if (pickup < new Date()) {
         return res.status(400).json({ message: 'Pickup date must be in the future' });
     };
+
+    const start = new Date(pickupDate);
+    const end = new Date(returnDate);
+
+    const pickup = new Date(start);
+    pickup.setHours(0, 0, 0, 0); // Set time to midnight for comparison
+    const returnD = new Date(end);
+    returnD.setHours(23, 59, 59, 999); // Set time to end of the day for comparison
+
 
     const existingBookings = await Booking.find({
         equipmentId,
@@ -67,6 +72,17 @@ const createBooking = async (req, res) => {
     }
 };
 
+const getAllBooking = async (req, res) => {
+    try{
+        const booking = await Booking.find()
+        .populate('userId', 'status');
+        res.status(200).json(booking);
+    }catch (error){
+        res.status(500).json({message: error.message});
+    }
+};
 
 
-module.exports = { createBooking };
+
+
+module.exports = { createBooking, getAllBooking };
